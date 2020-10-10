@@ -20,3 +20,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/songs', 'SongController@getSongs');
 Route::post('/songs', 'SongController@storeSong');
+Route::post('/songs/delete/{song_id}', 'SongController@delete');

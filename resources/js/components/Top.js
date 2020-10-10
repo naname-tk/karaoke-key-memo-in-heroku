@@ -16,6 +16,7 @@ export default class Top extends Component {
     this.enterSongNameChange = this.enterSongNameChange.bind(this);
     this.enterSingKeyChange = this.enterSingKeyChange.bind(this);
     this.enterArtistChange = this.enterArtistChange.bind(this);
+    this.deleteSong = this.deleteSong.bind(this);
     this.getSongAction();
 
     axios.defaults.headers.common = {
@@ -28,8 +29,8 @@ export default class Top extends Component {
     return (
       <div>
         曲名：<input type="text" value={this.state.enter_song_name} onChange={this.enterSongNameChange} /><br/>
-        キー：<input type="text" value={this.state.enter_sing_key} onChange={this.enterSingKeyChange} /><br/>
         歌人：<input type="text" value={this.state.enter_artist} onChange={this.enterArtistChange} /><br/>
+        キー：<input type="text" value={this.state.enter_sing_key} onChange={this.enterSingKeyChange} /><br/>
         <button onClick={this.storeSongAction}>曲を保存する。</button>
 
         <table class="table">
@@ -39,15 +40,18 @@ export default class Top extends Component {
               <th scope="col">曲名</th>
               <th scope="col">アーティスト</th>
               <th scope="col">キー</th>
+              {/* <th scope="col"></th> */}
             </tr>
           </thead>
           <tbody>
-            {this.state.songs.map(function(song, key){
-              return <tr>
+
+            {this.state.songs.map(function(song, key) {
+              return <tr key={key}>
                 <th scope="row">#</th>
                 <td>{song.song_name}</td>
                 <td>{song.artist}</td>
                 <td>{song.sing_key}</td>
+                {/* <td><button song_id={song.song_id} onClick={this.deleteSong}>✖︎</button></td> */}
               </tr>
             })}
           </tbody>
@@ -56,18 +60,15 @@ export default class Top extends Component {
     );
   }
 
-  enterSongNameChange(event)
-  {
+  enterSongNameChange(event) {
     this.setState({enter_song_name: event.target.value});
   }
 
-  enterSingKeyChange(event)
-  {
+  enterSingKeyChange(event) {
     this.setState({enter_sing_key: event.target.value});
   }
 
-  enterArtistChange(event)
-  {
+  enterArtistChange(event) {
     this.setState({enter_artist: event.target.value});
   }
 
@@ -84,14 +85,24 @@ export default class Top extends Component {
   }
 
   storeSongAction() {
-    axios.post('/api/songs', {
+    let song = {
       song_name: this.state.enter_song_name,
       sing_key: this.state.enter_sing_key,
       artist: this.state.enter_artist,
-    })
+    };
+    axios.post('/api/songs', song)
     .then(function (response) {
       console.log(response.data);
     });
-    this.getSongAction();
+    let tmp = this.state.songs;
+    tmp.push(song);
+    this.setState({songs: tmp})
+  }
+
+  deleteSong(event) {
+    axios.post('/api/songs/delete/'+event.target.song_id)
+    .then(function (response) {
+      console.log(response.data);
+    });
   }
 }

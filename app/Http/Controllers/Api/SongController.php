@@ -32,5 +32,12 @@ class SongController extends Controller
         $db_manager->table('songs')->insert($param);
     }
 
-
+    /**
+     * @param DatabaseManager $db_manager
+     * @return json
+     */
+    public function delete(DatabaseManager $db_manager, Song\DeleteRequest $request)
+    {
+        $db_manager->table('songs')->where('song_id', '=', $request->song_id)->delete();
+    }
 }
