@@ -66741,10 +66741,16 @@ var Top = /*#__PURE__*/function (_Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      songs: []
+      songs: [],
+      enter_song_name: '',
+      enter_sing_key: '',
+      enter_artist: ''
     };
     _this.getSongAction = _this.getSongAction.bind(_assertThisInitialized(_this));
     _this.storeSongAction = _this.storeSongAction.bind(_assertThisInitialized(_this));
+    _this.enterSongNameChange = _this.enterSongNameChange.bind(_assertThisInitialized(_this));
+    _this.enterSingKeyChange = _this.enterSingKeyChange.bind(_assertThisInitialized(_this));
+    _this.enterArtistChange = _this.enterArtistChange.bind(_assertThisInitialized(_this));
 
     _this.getSongAction();
 
@@ -66758,14 +66764,56 @@ var Top = /*#__PURE__*/function (_Component) {
   _createClass(Top, [{
     key: "render",
     value: function render() {
-      console.log(this.state, 'render');
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "\u66F2\u540D\uFF1A", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        value: this.state.enter_song_name,
+        onChange: this.enterSongNameChange
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "\u30AD\u30FC\uFF1A", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        value: this.state.enter_sing_key,
+        onChange: this.enterSingKeyChange
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "\u6B4C\u4EBA\uFF1A", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        value: this.state.enter_artist,
+        onChange: this.enterArtistChange
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.storeSongAction
-      }, "storeSongAction"), this.state.songs.map(function (song, key) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          key: key
-        }, song.song_name, ", \u30AD\u30FC\uFF1A", song.sing_key);
-      }));
+      }, "\u66F2\u3092\u4FDD\u5B58\u3059\u308B\u3002"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+        "class": "table"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "\u66F2\u540D"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "\u30A2\u30FC\u30C6\u30A3\u30B9\u30C8"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "\u30AD\u30FC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, this.state.songs.map(function (song, key) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+          scope: "row"
+        }, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, song.song_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, song.artist), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, song.sing_key));
+      }))));
+    }
+  }, {
+    key: "enterSongNameChange",
+    value: function enterSongNameChange(event) {
+      this.setState({
+        enter_song_name: event.target.value
+      });
+    }
+  }, {
+    key: "enterSingKeyChange",
+    value: function enterSingKeyChange(event) {
+      this.setState({
+        enter_sing_key: event.target.value
+      });
+    }
+  }, {
+    key: "enterArtistChange",
+    value: function enterArtistChange(event) {
+      this.setState({
+        enter_artist: event.target.value
+      });
     }
   }, {
     key: "getSongAction",
@@ -66784,9 +66832,9 @@ var Top = /*#__PURE__*/function (_Component) {
     key: "storeSongAction",
     value: function storeSongAction() {
       axios.post('/api/songs', {
-        song_name: '紅蓮花',
-        sing_key: '-1',
-        artist: null
+        song_name: this.state.enter_song_name,
+        sing_key: this.state.enter_sing_key,
+        artist: this.state.enter_artist
       }).then(function (response) {
         console.log(response.data);
       });
