@@ -10,12 +10,14 @@ export default class Top extends Component {
       enter_song_name: '',
       enter_sing_key: '',
       enter_artist: '',
+      enter_delete_song_id: '',
     };
     this.getSongAction = this.getSongAction.bind(this);
     this.storeSongAction = this.storeSongAction.bind(this);
     this.enterSongNameChange = this.enterSongNameChange.bind(this);
     this.enterSingKeyChange = this.enterSingKeyChange.bind(this);
     this.enterArtistChange = this.enterArtistChange.bind(this);
+    this.enterDeleteSongIdChange = this.enterDeleteSongIdChange.bind(this);
     this.deleteSong = this.deleteSong.bind(this);
     this.getSongAction();
 
@@ -28,10 +30,14 @@ export default class Top extends Component {
   render() {
     return (
       <div>
+        <button onClick={this.getSongAction}>更新</button><br/>
         曲名：<input type="text" value={this.state.enter_song_name} onChange={this.enterSongNameChange} /><br/>
         歌人：<input type="text" value={this.state.enter_artist} onChange={this.enterArtistChange} /><br/>
         キー：<input type="text" value={this.state.enter_sing_key} onChange={this.enterSingKeyChange} /><br/>
-        <button onClick={this.storeSongAction}>曲を保存する。</button>
+        <button onClick={this.storeSongAction}>曲を保存する。</button><br/><br/>
+        削除ID<input type="text" value={this.state.enter_delete_song_id} onChange={this.enterDeleteSongIdChange} /><br/>
+        <button onClick={this.deleteSong}>曲を消す</button><br/>
+
 
         <table class="table">
           <thead>
@@ -47,7 +53,7 @@ export default class Top extends Component {
 
             {this.state.songs.map(function(song, key) {
               return <tr key={key}>
-                <th scope="row">#</th>
+                <th scope="row">{song.song_id}</th>
                 <td>{song.song_name}</td>
                 <td>{song.artist}</td>
                 <td>{song.sing_key}</td>
@@ -58,6 +64,10 @@ export default class Top extends Component {
         </table>
       </div>
     );
+  }
+
+  enterDeleteSongIdChange(event) {
+    this.setState({enter_delete_song_id: event.target.value});
   }
 
   enterSongNameChange(event) {
@@ -100,9 +110,10 @@ export default class Top extends Component {
   }
 
   deleteSong(event) {
-    axios.post('/api/songs/delete/'+event.target.song_id)
+    axios.post('/api/songs/delete/'+this.state.enter_delete_song_id)
     .then(function (response) {
       console.log(response.data);
     });
+    this.getSongAction()
   }
 }

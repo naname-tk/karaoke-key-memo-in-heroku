@@ -66744,13 +66744,15 @@ var Top = /*#__PURE__*/function (_Component) {
       songs: [],
       enter_song_name: '',
       enter_sing_key: '',
-      enter_artist: ''
+      enter_artist: '',
+      enter_delete_song_id: ''
     };
     _this.getSongAction = _this.getSongAction.bind(_assertThisInitialized(_this));
     _this.storeSongAction = _this.storeSongAction.bind(_assertThisInitialized(_this));
     _this.enterSongNameChange = _this.enterSongNameChange.bind(_assertThisInitialized(_this));
     _this.enterSingKeyChange = _this.enterSingKeyChange.bind(_assertThisInitialized(_this));
     _this.enterArtistChange = _this.enterArtistChange.bind(_assertThisInitialized(_this));
+    _this.enterDeleteSongIdChange = _this.enterDeleteSongIdChange.bind(_assertThisInitialized(_this));
     _this.deleteSong = _this.deleteSong.bind(_assertThisInitialized(_this));
 
     _this.getSongAction();
@@ -66765,7 +66767,9 @@ var Top = /*#__PURE__*/function (_Component) {
   _createClass(Top, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "\u66F2\u540D\uFF1A", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.getSongAction
+      }, "\u66F4\u65B0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "\u66F2\u540D\uFF1A", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         value: this.state.enter_song_name,
         onChange: this.enterSongNameChange
@@ -66779,7 +66783,13 @@ var Top = /*#__PURE__*/function (_Component) {
         onChange: this.enterSingKeyChange
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.storeSongAction
-      }, "\u66F2\u3092\u4FDD\u5B58\u3059\u308B\u3002"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+      }, "\u66F2\u3092\u4FDD\u5B58\u3059\u308B\u3002"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "\u524A\u9664ID", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        value: this.state.enter_delete_song_id,
+        onChange: this.enterDeleteSongIdChange
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.deleteSong
+      }, "\u66F2\u3092\u6D88\u3059"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
         "class": "table"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
@@ -66794,8 +66804,15 @@ var Top = /*#__PURE__*/function (_Component) {
           key: key
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
           scope: "row"
-        }, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, song.song_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, song.artist), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, song.sing_key));
+        }, song.song_id), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, song.song_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, song.artist), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, song.sing_key));
       }))));
+    }
+  }, {
+    key: "enterDeleteSongIdChange",
+    value: function enterDeleteSongIdChange(event) {
+      this.setState({
+        enter_delete_song_id: event.target.value
+      });
     }
   }, {
     key: "enterSongNameChange",
@@ -66851,9 +66868,10 @@ var Top = /*#__PURE__*/function (_Component) {
   }, {
     key: "deleteSong",
     value: function deleteSong(event) {
-      axios.post('/api/songs/delete/' + event.target.song_id).then(function (response) {
+      axios.post('/api/songs/delete/' + this.state.enter_delete_song_id).then(function (response) {
         console.log(response.data);
       });
+      this.getSongAction();
     }
   }]);
 
