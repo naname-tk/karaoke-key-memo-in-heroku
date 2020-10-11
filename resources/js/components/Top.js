@@ -32,7 +32,7 @@ export default class Top extends Component {
       <div>
         <button onClick={this.getSongAction}>更新</button><br/>
         曲名：<input type="text" value={this.state.enter_song_name} onChange={this.enterSongNameChange} /><br/>
-        歌人：<input type="text" value={this.state.enter_artist} onChange={this.enterArtistChange} /><br/>
+        歌手：<input type="text" value={this.state.enter_artist} onChange={this.enterArtistChange} /><br/>
         キー：<input type="text" value={this.state.enter_sing_key} onChange={this.enterSingKeyChange} /><br/>
         <button onClick={this.storeSongAction}>曲を保存する。</button><br/><br/>
         削除ID<input type="text" value={this.state.enter_delete_song_id} onChange={this.enterDeleteSongIdChange} /><br/>
@@ -42,9 +42,9 @@ export default class Top extends Component {
         <table class="table">
           <thead>
             <tr>
-              <th scope="col">#</th>
+              <th scope="col">No.</th>
               <th scope="col">曲名</th>
-              <th scope="col">アーティスト</th>
+              <th scope="col">歌手</th>
               <th scope="col">キー</th>
               {/* <th scope="col"></th> */}
             </tr>
