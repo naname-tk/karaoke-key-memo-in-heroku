@@ -52,11 +52,9 @@ export default class Top extends Component {
           <br/>
         歌手：<input type="text" value={this.state.enter_artist} onChange={this.enterArtistChange} /><br/>
         キー：<select value={this.state.enter_sing_key} onChange={this.enterSingKeyChange}>{list}</select><br/>
-             <button onClick={this.storeSongAction}>曲を保存する。</button>　　　<button onClick={this.clearEnter}>クリアする</button>
-             <br/>
-             <br/>
-        削除ID<input type="text" value={this.state.enter_delete_song_id} onChange={this.enterDeleteSongIdChange} /><br/>
-              <button onClick={this.deleteSong}>曲を消す</button><br/>
+          <button onClick={this.storeSongAction}>曲を保存する。</button>　　　<button onClick={this.clearEnter}>クリアする</button>
+          <br/>
+          <br/>
 
         <table className="table">
           <thead>
