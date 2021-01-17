@@ -23,7 +23,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // 強制的に、HTTPS
+        // 本番環境の時、出力されるURLをHTTPSにする。
+        // ※url()メソッドのにしか適用できないので注意する。
         if (\App::environment(['production'])) {
             \URL::forceScheme('https');
         }
