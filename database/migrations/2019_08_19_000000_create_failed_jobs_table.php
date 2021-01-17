@@ -16,7 +16,7 @@ class CreateFailedJobsTable extends Migration
         Schema::create('failed_jobs', function (Blueprint $table) {
             $table->id();
             // heroku mysql versionではユニークキーは191文字まで
-            $table->string('uuid')->unique();
+            $table->string('uuid', 191)->unique();
             $table->text('connection');
             $table->text('queue');
             $table->longText('payload');
