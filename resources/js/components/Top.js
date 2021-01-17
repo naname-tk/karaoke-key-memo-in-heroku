@@ -16,17 +16,23 @@ export default class Top extends Component {
       enter_song_name: '',
       enter_sing_key: 0,
       enter_artist: '',
-      enter_delete_song_id: '',
+      enter_memo: '',
     };
+
+    this.memoSets = [
+      '調子がいいとき',
+      '普通',
+      '調子悪いとき',
+    ]
 
     this.getSongAction = this.getSongAction.bind(this);
     this.storeSongAction = this.storeSongAction.bind(this);
     this.enterSongNameChange = this.enterSongNameChange.bind(this);
     this.enterSingKeyChange = this.enterSingKeyChange.bind(this);
     this.enterArtistChange = this.enterArtistChange.bind(this);
-    this.enterDeleteSongIdChange = this.enterDeleteSongIdChange.bind(this);
     this.deleteSong = this.deleteSong.bind(this);
     this.clearEnter = this.clearEnter.bind(this);
+    this.enterMemoChange = this.enterMemoChange.bind(this);
     this.getSongAction();
 
     axios.defaults.headers.common = {
@@ -52,6 +58,15 @@ export default class Top extends Component {
           <br/>
         歌手：<input type="text" value={this.state.enter_artist} onChange={this.enterArtistChange} /><br/>
         キー：<select value={this.state.enter_sing_key} onChange={this.enterSingKeyChange}>{list}</select><br/>
+        メモ：<input type="text" value={this.state.enter_memo} onChange={this.enterMemoChange} /><br/>
+        <div>メモ手軽設定
+        {this.memoSets.map((memo, idx) => {
+          return <button key={idx+'setMemoButton'} onClick={() => this.setMemo(memo)}>{memo}</button>
+        })}
+          {/* <button onClick={this.setMemo('調子いいとき')}>調子いいとき</button>
+          <button onClick={this.setMemo('')}>調子悪いとき</button>
+          <button onClick={this.storeSongAction}>普通</button> */}
+        </div>
           <button onClick={this.storeSongAction}>曲を保存する。</button>　　　<button onClick={this.clearEnter}>クリアする</button>
           <br/>
           <br/>
@@ -59,20 +74,20 @@ export default class Top extends Component {
         <table className="table">
           <thead>
             <tr>
-              <th scope="col">No.</th>
               <th scope="col">曲名</th>
               <th scope="col">歌手</th>
               <th scope="col">キー</th>
-              {/* <th scope="col"></th> */}
+              <th scope="col">メモ</th>
+              <th scope="col">削除</th>
             </tr>
           </thead>
           <tbody>
             {this.state.songs.map((song, key) => {
               return <tr key={key}>
-                <th scope="row">{song.song_id}</th>
-                <td>{song.song_name}</td>
+                <th scope="row">{song.song_name}</th>
                 <td>{song.artist}</td>
                 <td>{song.sing_key}</td>
+                <td>{song.memo}</td>
                 <td>
                   <button song_id={song.song_id} onClick={() => this.deleteSong(song.song_id)}>✖︎</button>
                 </td>
@@ -82,10 +97,6 @@ export default class Top extends Component {
         </table>
       </div>
     );
-  }
-
-  enterDeleteSongIdChange(event) {
-    this.setState({enter_delete_song_id: event.target.value});
   }
 
   enterSongNameChange(event) {
@@ -100,11 +111,20 @@ export default class Top extends Component {
     this.setState({enter_artist: event.target.value});
   }
 
+  enterMemoChange(event) {
+    this.setState({enter_memo: event.target.value});
+  }
+
+  setMemo(memo) {
+    this.setState({enter_memo: memo});
+  }
+
   clearEnter() {
     this.setState({
       enter_artist: "",
       enter_sing_key: 0,
-      enter_song_name: ""
+      enter_song_name: "",
+      enter_memo: ""
     });
   }
 
@@ -136,6 +156,7 @@ export default class Top extends Component {
       song_name: this.state.enter_song_name,
       sing_key: this.state.enter_sing_key,
       artist: this.state.enter_artist,
+      memo: this.state.enter_memo,
     };
     axios.post('/api/songs', song)
     .then((response) => {

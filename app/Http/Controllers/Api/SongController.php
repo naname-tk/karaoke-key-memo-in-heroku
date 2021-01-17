@@ -28,6 +28,7 @@ class SongController extends Controller
             'song_name',
             'sing_key',
             'artist',
+            'memo',
         ]);
         $db_manager->table('songs')->insert($param);
     }
