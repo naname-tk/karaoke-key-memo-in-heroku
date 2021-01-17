@@ -18,12 +18,9 @@ class ForceHttpProtocol
     public function handle(Request $request, Closure $next)
     {
         // 本番環境のみ常時SSL化する
-        dd(
-            $request->secure(),
-            $_SERVER["HTTP_X_FORWARDED_PROTO"],
-             App::environment(['production'])
-        );
-        if (!$request->secure() && App::environment(['production'])) {
+        if (App::environment(['production'])
+                && $_SERVER["HTTP_X_FORWARDED_PROTO"] !== 'https'
+        ) {
             return redirect()->secure($request->getRequestUri());
         }
         return $next($request);
