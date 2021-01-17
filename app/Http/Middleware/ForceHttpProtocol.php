@@ -19,7 +19,7 @@ class ForceHttpProtocol
     {
         // 本番環境のみ常時SSL化する
         dd(
-            !$request->secure(),
+            $request->secure(),
              App::environment(['production'])
         );
         if (!$request->secure() && App::environment(['production'])) {
