@@ -11,6 +11,9 @@
     <link href="{{ config('app.url').'/css/app.css' }}" rel="stylesheet">
 </head>
 <body>
+    <script>
+        window.const = {!! $const !!}
+    </script>
 <div id="app"></div>
 </body>
 </html>

@@ -66741,9 +66741,14 @@ var Top = /*#__PURE__*/function (_Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      songs: [],
+      songs: [// {
+        //   song_name: 'songname',
+        //   artist: 'art',
+        //   sing_key: '-1',
+        // }
+      ],
       enter_song_name: '',
-      enter_sing_key: '',
+      enter_sing_key: 0,
       enter_artist: '',
       enter_delete_song_id: ''
     };
@@ -66754,6 +66759,7 @@ var Top = /*#__PURE__*/function (_Component) {
     _this.enterArtistChange = _this.enterArtistChange.bind(_assertThisInitialized(_this));
     _this.enterDeleteSongIdChange = _this.enterDeleteSongIdChange.bind(_assertThisInitialized(_this));
     _this.deleteSong = _this.deleteSong.bind(_assertThisInitialized(_this));
+    _this.clearEnter = _this.clearEnter.bind(_assertThisInitialized(_this));
 
     _this.getSongAction();
 
@@ -66767,44 +66773,65 @@ var Top = /*#__PURE__*/function (_Component) {
   _createClass(Top, [{
     key: "render",
     value: function render() {
+      var _this2 = this;
+
+      // キーのプルダウン
+      var sing_keys = this.getChooseKey(window["const"].sing_key.min, window["const"].sing_key.max);
+      var list = [];
+
+      for (var i in sing_keys) {
+        var key = sing_keys[i];
+        var temp = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: i,
+          value: key
+        }, key);
+        list.push(temp);
+      }
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.getSongAction
       }, "\u66F4\u65B0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "\u66F2\u540D\uFF1A", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         value: this.state.enter_song_name,
         onChange: this.enterSongNameChange
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "\u6B4C\u4EBA\uFF1A", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "\u6B4C\u624B\uFF1A", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         value: this.state.enter_artist,
         onChange: this.enterArtistChange
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "\u30AD\u30FC\uFF1A", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text",
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "\u30AD\u30FC\uFF1A", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         value: this.state.enter_sing_key,
         onChange: this.enterSingKeyChange
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, list), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.storeSongAction
-      }, "\u66F2\u3092\u4FDD\u5B58\u3059\u308B\u3002"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "\u524A\u9664ID", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, "\u66F2\u3092\u4FDD\u5B58\u3059\u308B\u3002"), "\u3000\u3000\u3000", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.clearEnter
+      }, "\u30AF\u30EA\u30A2\u3059\u308B"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "\u524A\u9664ID", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         value: this.state.enter_delete_song_id,
         onChange: this.enterDeleteSongIdChange
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.deleteSong
       }, "\u66F2\u3092\u6D88\u3059"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
-        "class": "table"
+        className: "table"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
-      }, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      }, "No."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
       }, "\u66F2\u540D"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
-      }, "\u30A2\u30FC\u30C6\u30A3\u30B9\u30C8"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      }, "\u6B4C\u624B"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
       }, "\u30AD\u30FC"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, this.state.songs.map(function (song, key) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
           key: key
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
           scope: "row"
-        }, song.song_id), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, song.song_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, song.artist), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, song.sing_key));
+        }, song.song_id), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, song.song_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, song.artist), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, song.sing_key), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          song_id: song.song_id,
+          onClick: function onClick() {
+            return _this2.deleteSong(song.song_id);
+          }
+        }, "\u2716\uFE0E")));
       }))));
     }
   }, {
@@ -66836,12 +66863,26 @@ var Top = /*#__PURE__*/function (_Component) {
       });
     }
   }, {
+    key: "clearEnter",
+    value: function clearEnter() {
+      this.setState({
+        enter_artist: "",
+        enter_sing_key: 0,
+        enter_song_name: ""
+      });
+    }
+  }, {
+    key: "deleteA",
+    value: function deleteA() {
+      console.log('BAA');
+    }
+  }, {
     key: "getSongAction",
     value: function getSongAction() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.get('/api/songs').then(function (response) {
-        _this2.setState({
+        _this3.setState({
           songs: response.data
         });
       })["catch"](function (error) {
@@ -66849,29 +66890,37 @@ var Top = /*#__PURE__*/function (_Component) {
       });
     }
   }, {
+    key: "deleteSong",
+    value: function deleteSong(song_id) {
+      var _this4 = this;
+
+      axios.post('/api/songs/delete/' + song_id).then(function (response) {
+        _this4.getSongAction();
+      });
+    }
+  }, {
     key: "storeSongAction",
     value: function storeSongAction() {
+      var _this5 = this;
+
       var song = {
         song_name: this.state.enter_song_name,
         sing_key: this.state.enter_sing_key,
         artist: this.state.enter_artist
       };
       axios.post('/api/songs', song).then(function (response) {
-        console.log(response.data);
-      });
-      var tmp = this.state.songs;
-      tmp.push(song);
-      this.setState({
-        songs: tmp
+        _this5.getSongAction();
       });
     }
   }, {
-    key: "deleteSong",
-    value: function deleteSong(event) {
-      axios.post('/api/songs/delete/' + this.state.enter_delete_song_id).then(function (response) {
-        console.log(response.data);
+    key: "getChooseKey",
+    value: function getChooseKey(start, stop) {
+      var step = 1;
+      return Array.from({
+        length: (stop - start) / step + 1
+      }, function (_, i) {
+        return start + i * step;
       });
-      this.getSongAction();
     }
   }]);
 
