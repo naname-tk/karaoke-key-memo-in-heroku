@@ -18,6 +18,10 @@ class ForceHttpProtocol
     public function handle(Request $request, Closure $next)
     {
         // 本番環境のみ常時SSL化する
+        dd(
+            !$request->secure(),
+             App::environment(['production'])
+        );
         if (!$request->secure() && App::environment(['production'])) {
             return redirect()->secure($request->getRequestUri());
         }
