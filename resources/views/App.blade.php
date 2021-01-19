@@ -7,6 +7,7 @@
     <title>{{ config('app.name', 'React導入テスト') }}</title>
     <script src="{{ config('app.url').'/js/app.js' }}" defer></script>
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    @include('common.favicon')
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link href="{{ config('app.url').'/css/app.css' }}" rel="stylesheet">
 </head>
