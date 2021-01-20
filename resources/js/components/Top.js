@@ -78,7 +78,7 @@ export default class Top extends Component {
               <th scope="col">歌手</th>
               <th scope="col">キー</th>
               <th scope="col">メモ</th>
-              <th scope="col">削除</th>
+              <th scope="col"></th>{/* 削除などのアクション */}
             </tr>
           </thead>
           <tbody>
@@ -90,6 +90,7 @@ export default class Top extends Component {
                 <td>{song.memo}</td>
                 <td>
                   <button song_id={song.song_id} onClick={() => this.deleteSong(song.song_id)}>✖︎</button>
+                  <button song_id={song.song_id} onClick={() => this.editSong(song.song_id)}>ヘン</button>
                 </td>
               </tr>
             })}
@@ -142,6 +143,10 @@ export default class Top extends Component {
       .catch(function (error) {
           console.log(error);
       });
+  }
+
+  editSong(song_id) {
+    console.log(song_id);
   }
 
   deleteSong(song_id) {
