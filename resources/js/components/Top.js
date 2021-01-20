@@ -43,7 +43,7 @@ export default class Top extends Component {
 
   render() {
     // キーのプルダウン
-    let sing_keys = this.getChooseKey(window.const.sing_key.min, window.const.sing_key.max)
+    let sing_keys = this.getKeyChoices(window.const.sing_key.max, window.const.sing_key.min)
     let list = [];
     for(var i in sing_keys) {
       let key = sing_keys[i]
@@ -164,9 +164,11 @@ export default class Top extends Component {
     });
   }
 
-  getChooseKey(start, stop)
-  {
-    let step = 1;
-    return Array.from({ length: (stop - start) / step + 1}, (_, i) => start + (i * step));
+  getKeyChoices(start, end) {
+    const list = [];
+    for (let i = start; i >= end; i-- ) {
+      list.push(i);
+    }
+    return list;
   }
 }
