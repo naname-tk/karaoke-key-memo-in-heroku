@@ -14,7 +14,7 @@ class AddMemoToSongs extends Migration
     public function up()
     {
         Schema::table('songs', function (Blueprint $table) {
-            $table->string('memo')->comment('メモ');
+            $table->string('memo')->nullable()->after('sing_key')->comment('メモ');
         });
     }
 
