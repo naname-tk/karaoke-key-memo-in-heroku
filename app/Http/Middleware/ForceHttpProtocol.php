@@ -17,8 +17,9 @@ class ForceHttpProtocol
      */
     public function handle(Request $request, Closure $next)
     {
-        // 本番環境のみ常時SSL化する
-        if (App::environment(['production'])
+        // envに設定しているURLで、httpsだった場合、リダイレクトするように設定
+        if (0 === strpos(config('app.url'), 'https')
+                && isset($_SERVER["HTTP_X_FORWARDED_PROTO"])
                 && $_SERVER["HTTP_X_FORWARDED_PROTO"] !== 'https'
         ) {
             return redirect()->secure($request->getRequestUri());

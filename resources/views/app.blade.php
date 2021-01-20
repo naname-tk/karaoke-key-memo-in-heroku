@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'React導入テスト') }}</title>
-    <script src="{{ config('app.url').'/js/app.js' }}" defer></script>
+    <script src="{!! myAsset('js/app.js') !!}" defer></script>
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     @include('common.favicon')
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
