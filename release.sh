@@ -1,2 +1,2 @@
+rm -R node_modules/
 npm install
-npm run production
