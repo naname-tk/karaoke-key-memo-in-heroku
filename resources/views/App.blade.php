@@ -13,7 +13,7 @@
   </head>
   <body>
     <script>
-      // 本番環境上でコンソール上のdevtoolに関するメッセージを本番環境では表示しないようにする。
+      {{-- 本番環境上でコンソール上のdevtoolに関するメッセージを本番環境では表示しないようにする。 --}}
       @production
         window.__REACT_DEVTOOLS_GLOBAL_HOOK__ = {
           supportsFiber: true,
