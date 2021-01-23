@@ -1,9 +1,9 @@
 /node_modules
 /public/hot
 /public/storage
-/public/css/app*
-/public/js/app*
-/public/js/popper*
+# /public/css/app*
+# /public/js/app*
+# /public/js/popper*
 /public/mix-manifest.json
 /storage/*.key
 /vendor
